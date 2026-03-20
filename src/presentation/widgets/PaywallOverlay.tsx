@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {StyleSheet, Text, TouchableOpacity, View, Dimensions} from 'react-native';
+import {StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View, Dimensions} from 'react-native';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
@@ -73,39 +73,43 @@ export const PaywallOverlay: React.FC<PaywallOverlayProps> = ({
 
   return (
     <Animated.View style={[StyleSheet.absoluteFill, overlayStyle]}>
-      <BlurView
-        style={StyleSheet.absoluteFill}
-        blurType="dark"
-        blurAmount={15}
-        reducedTransparencyFallbackColor="rgba(0,0,0,0.8)"
-      />
-      <View style={styles.centerer}>
-        <Animated.View style={[styles.card, cardStyle]}>
-          <Text style={styles.lockIcon}>🔒</Text>
-          <Text style={styles.title}>Episode Locked</Text>
-          <Text style={styles.subtitle}>
-            Unlock this episode to continue watching
-          </Text>
-          <TouchableOpacity
-            style={styles.ctaButton}
-            onPress={onUnlock}
-            activeOpacity={0.8}>
-            <Text style={styles.ctaText}>Unlock Episode</Text>
-            <Animated.View style={[StyleSheet.absoluteFill, shimmerStyle]}>
-              <LinearGradient
-                colors={[
-                  'transparent',
-                  'rgba(255,255,255,0.15)',
-                  'transparent',
-                ]}
-                start={{x: 0, y: 0.5}}
-                end={{x: 1, y: 0.5}}
-                style={StyleSheet.absoluteFill}
-              />
+      <TouchableWithoutFeedback>
+        <View style={StyleSheet.absoluteFill}>
+          <BlurView
+            style={StyleSheet.absoluteFill}
+            blurType="dark"
+            blurAmount={15}
+            reducedTransparencyFallbackColor="rgba(0,0,0,0.8)"
+          />
+          <View style={styles.centerer}>
+            <Animated.View style={[styles.card, cardStyle]}>
+              <Text style={styles.lockIcon}>🔒</Text>
+              <Text style={styles.title}>Episode Locked</Text>
+              <Text style={styles.subtitle}>
+                Unlock this episode to continue watching
+              </Text>
+              <TouchableOpacity
+                style={styles.ctaButton}
+                onPress={onUnlock}
+                activeOpacity={0.8}>
+                <Text style={styles.ctaText}>Unlock Episode</Text>
+                <Animated.View style={[StyleSheet.absoluteFill, shimmerStyle]}>
+                  <LinearGradient
+                    colors={[
+                      'transparent',
+                      'rgba(255,255,255,0.15)',
+                      'transparent',
+                    ]}
+                    start={{x: 0, y: 0.5}}
+                    end={{x: 1, y: 0.5}}
+                    style={StyleSheet.absoluteFill}
+                  />
+                </Animated.View>
+              </TouchableOpacity>
             </Animated.View>
-          </TouchableOpacity>
-        </Animated.View>
-      </View>
+          </View>
+        </View>
+      </TouchableWithoutFeedback>
     </Animated.View>
   );
 };
